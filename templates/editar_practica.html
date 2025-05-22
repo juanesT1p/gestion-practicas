@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Editar perfil de {{ practicante.nombre }}</h2>
+    <form method="post">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" name="nombre" class="form-control" value="{{ practicante.nombre }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="celular" class="form-label">Celular</label>
+            <input type="text" name="celular" class="form-control" value="{{ practicante.celular }}">
+        </div>
+        <div class="mb-3">
+            <label for="estado" class="form-label">Estado de práctica</label>
+            <input type="text" name="estado" class="form-control" value="{{ practicante.estado }}">
+        </div>
+        <div class="mb-3">
+            <label for="carrera" class="form-label">Carrera</label>
+            <input type="text" name="carrera" class="form-control" value="{{ practicante.carrera }}">
+        </div>
+        <button type="submit" class="btn btn-success">Guardar cambios</button>
+        <a href="/dashboard_responsable" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
+

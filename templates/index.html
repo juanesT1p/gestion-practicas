@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Practicantes</title>
+    <meta charset="UTF-8">
+    <title>Inicio de sesión</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body class="container mt-4">
-    <h1>Listado de Practicantes</h1>
-    <a href="/agregar" class="btn btn-success mb-3">Agregar</a>
-    <table class="table table-bordered">
-        <thead><tr><th>Nombre</th><th>Programa</th><th>Estado</th><th>Responsable</th><th>Acciones</th></tr></thead>
-        <tbody>
-            {% for p in practicantes %}
-            <tr>
-                <td>{{ p.nombre }}</td>
-                <td>{{ p.programa }}</td>
-                <td>{{ p.estado }}</td>
-                <td>{{ p.responsable }}</td>
-                <td>
-                    <a href="{{ url_for('editar', id=p.id) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <a href="{{ url_for('eliminar', id=p.id) }}" class="btn btn-danger btn-sm">Eliminar</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<body class="container mt-5">
+    <h2>Iniciar sesión</h2>
+    <form action="/login" method="POST">
+        <div class="mb-3">
+            <label for="tipo_usuario" class="form-label">Tipo de usuario:</label>
+            <select name="tipo_usuario" class="form-select" required>
+                <option value="practicante">Practicante</option>
+                <option value="responsable">Responsable</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="id_usuario" class="form-label">ID del usuario:</label>
+            <input type="number" name="id_usuario" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Entrar</button>
+    </form>
 </body>
 </html>

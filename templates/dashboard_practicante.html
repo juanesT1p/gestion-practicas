@@ -1,18 +1,33 @@
-{% extends "layout.html" %}
-{% block title %}Panel del Practicante{% endblock %}
-{% block main %}
-<h2>Registrar Avance</h2>
-<form method="POST">
-    <div class="form-group">
-        <textarea class="form-control" name="contenido" required></textarea>
-    </div>
-    <button class="btn btn-success">Guardar</button>
-</form>
+{% extends "base.html" %}
 
-<h3 class="mt-4">Mis Avances</h3>
-<ul>
-    {% for a in avances %}
-        <li>{{ a.fecha.strftime('%Y-%m-%d %H:%M') }} - {{ a.contenido }}</li>
-    {% endfor %}
-</ul>
+{% block content %}
+<div class="container mt-4">
+  <h2>Panel del Practicante</h2>
+  <a href="{{ url_for('logout') }}" class="btn btn-danger mb-3">Cerrar sesión</a>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5>Datos Personales</h5>
+      <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+      <p><strong>Carrera:</strong> {{ usuario.carrera }}</p>
+      <p><strong>Celular:</strong> {{ usuario.celular }}</p>
+      <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+      <p><strong>Estado de práctica:</strong> {{ usuario.estado_practica }}</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5>Enviar Informe de Avance</h5>
+      <form method="POST" action="{{ url_for('enviar_informe') }}">
+        <div class="mb-3">
+          <label for="informe" class="form-label">Informe</label>
+          <textarea id="informe" name="contenido" class="form-control" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar Informe</button>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
+

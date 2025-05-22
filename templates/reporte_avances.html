@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Reporte de Avances - {{ practicante.nombre }}</h2>
+    <p><strong>Correo:</strong> {{ practicante.correo }}</p>
+    <p><strong>Celular:</strong> {{ practicante.celular }}</p>
+    <p><strong>Carrera:</strong> {{ practicante.carrera }}</p>
+
+    <hr>
+
+    {% if avances %}
+        <div class="list-group">
+            {% for avance in avances %}
+            <div class="list-group-item">
+                <h5>{{ avance.titulo }}</h5>
+                <p>{{ avance.descripcion }}</p>
+                {% if avance.archivo %}
+                    <a href="{{ url_for('static', filename='uploads/' ~ avance.archivo) }}" target="_blank">Archivo adjunto</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No hay avances registrados para este practicante.</p>
+    {% endif %}
+
+    <a href="{{ url_for('dashboard_responsable') }}" class="btn btn-secondary mt-3">Volver al Dashboard</a>
+</div>
+{% endblock %}

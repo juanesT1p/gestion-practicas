@@ -1,10 +1,92 @@
-{% extends "layout.html" %}
-{% block title %}Panel del Responsable{% endblock %}
-{% block main %}
-<h2>Avances de Practicantes</h2>
-<ul>
-    {% for a in avances %}
-        <li><strong>{{ a.usuario.email }}</strong> - {{ a.fecha.strftime('%Y-%m-%d %H:%M') }}<br>{{ a.contenido }}</li>
-    {% endfor %}
-</ul>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Panel del Responsable</h2>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Cerrar sesión</a>
+  </div>
+
+  <!-- Filtro por estado -->
+  <form method="GET" action="{{ url_for('dashboard_responsable') }}" class="mb-4">
+    <div class="row">
+      <div class="col-md-4">
+        <select name="estado" class="form-select">
+          <option value="" {% if not request.args.get('estado') %}selected{% endif %}>Filtrar por estado</option>
+          <option value="En progreso" {% if request.args.get('estado') == 'En progreso' %}selected{% endif %}>En progreso</option>
+          <option value="Finalizada" {% if request.args.get('estado') == 'Finalizada' %}selected{% endif %}>Finalizada</option>
+          <option value="Pendiente" {% if request.args.get('estado') == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-secondary">Filtrar</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Tabla de practicantes -->
+  <div class="table-responsive mb-5">
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Nombre</th>
+          <th>Carrera</th>
+          <th>Celular</th>
+          <th>Estado</th>
+          <th>Retroalimentación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in practicantes %}
+        <tr>
+          <form action="{{ url_for('editar_practicante', id=p.id) }}" method="POST">
+            <td>{{ p.nombre }}</td>
+            <td>{{ p.carrera }}</td>
+            <td>{{ p.celular }}</td>
+            <td>
+              <select name="estado_practica" class="form-select">
+                <option value="Pendiente" {% if p.estado_practica == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                <option value="En progreso" {% if p.estado_practica == 'En progreso' %}selected{% endif %}>En progreso</option>
+                <option value="Finalizada" {% if p.estado_practica == 'Finalizada' %}selected{% endif %}>Finalizada</option>
+              </select>
+            </td>
+            <td>
+              <textarea name="retroalimentacion" class="form-control" rows="2">{{ p.retroalimentacion }}</textarea>
+            </td>
+            <td>
+              <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+              <a href="{{ url_for('reporte_avances', id=p.id) }}" class="btn btn-info btn-sm mt-1">Ver avances</a>
+            </td>
+          </form>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tabla de informes -->
+  <h3>Informes recibidos</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Practicante</th>
+          <th>Contenido</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for informe in informes %}
+        <tr>
+          <td>{{ informe.usuario.nombre }}</td>
+          <td>{{ informe.contenido }}</td>
+          <td>{{ informe.fecha.strftime('%Y-%m-%d %H:%M') }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
 {% endblock %}
