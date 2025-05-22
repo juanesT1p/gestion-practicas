@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Panel del Practicante{% endblock %}
+{% block main %}
+<h2>Registrar Avance</h2>
+<form method="POST">
+    <div class="form-group">
+        <textarea class="form-control" name="contenido" required></textarea>
+    </div>
+    <button class="btn btn-success">Guardar</button>
+</form>
+
+<h3 class="mt-4">Mis Avances</h3>
+<ul>
+    {% for a in avances %}
+        <li>{{ a.fecha.strftime('%Y-%m-%d %H:%M') }} - {{ a.contenido }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

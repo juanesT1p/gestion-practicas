@@ -1,0 +1,7 @@
+@app.route("/dashboard")
+def dashboard():
+    if session.get("tipo") == "practicante":
+        return redirect("/mis_avances")
+    elif session.get("tipo") == "responsable":
+        return redirect("/todos_los_avances")
+    return redirect("/login")

@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block title %}Panel del Responsable{% endblock %}
+{% block main %}
+<h2>Avances de Practicantes</h2>
+<ul>
+    {% for a in avances %}
+        <li><strong>{{ a.usuario.email }}</strong> - {{ a.fecha.strftime('%Y-%m-%d %H:%M') }}<br>{{ a.contenido }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
